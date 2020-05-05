@@ -37,34 +37,36 @@ import_data <- function(celebridade = "tom_cruise"){
     #' O argumento deve ser tom_cruise
     require(tidyverse, warn.conflicts = F)
     require(rvest)
+    require(janitor)
     
     url_alvo = str_glue("https://www.rottentomatoes.com/celebrity/{celebridade}")
     
     from_page <- read_html(url_alvo) %>% 
-        html_node("#filmography") %>% # A sintaxe da expressão é de um seletor à lá JQuery: https://rdrr.io/cran/rvest/man/html_nodes.html 
+        html_node(".scroll-x") %>% # A sintaxe da expressão é de um seletor à lá JQuery: https://rdrr.io/cran/rvest/man/html_nodes.html 
         html_node("table") %>%
         html_table(fill=TRUE) %>% # Faz parse
         as_tibble()
     
     filmes = from_page %>% 
-        filter(RATING != "No Score Yet", 
-               BOXOFFICE != "—", 
-               !(CREDIT %in% c("Producer", "Executive Producer"))) %>%
-        mutate(RATING = as.numeric(gsub("%", "", RATING)),
-               CREDIT = gsub("\n *", " ", CREDIT),
-               BOXOFFICE = as.numeric(gsub("[$|M]", "", BOXOFFICE))) %>% 
-        filter(BOXOFFICE >= 1)
+        clean_names() %>% 
+        filter(rating != "No Score Yet", 
+               box_office != "—", 
+               !(credit %in% c("Producer", "Executive Producer"))) %>%
+        mutate(rating = as.numeric(gsub("%", "", rating)),
+               credit = gsub("\n *", " ", credit),
+               box_office = as.numeric(gsub("[$|M]", "", box_office))) %>% 
+        filter(box_office >= 1)
     
     filmes %>% 
-        write_csv(here::here("data/movies.csv"))
+        write_csv(here::here(paste0("data/", celebridade, ".csv")))
 }
 
 read_imported_data <- function(){
     read_csv(here::here("data/movies.csv"), 
              col_types = "iccdi") %>% 
-        rename(filme = TITLE,
-               avaliacao = RATING, 
-               bilheteria = BOXOFFICE,
-               ano = YEAR, 
-               papel = CREDIT)
+        rename(filme = title,
+               avaliacao = rating, 
+               bilheteria = box_office,
+               ano = year, 
+               papel = credit)
 }
