@@ -1,0 +1,77 @@
+---
+title: "Tipos de filme de FULANO(A)"
+output:
+    html_document:
+    df_print: paged
+theme: sandstone
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(here)
+library(cluster)
+library(plotly)
+
+source(here::here("code/lib.R"))
+theme_set(theme_report())
+
+knitr::opts_chunk$set(tidy = FALSE,
+                      fig.width = 6,
+                      fig.height = 5,
+                      echo = TRUE)
+
+paleta = c("#404E4D",
+           "#92DCE5",
+           "#938BA1",
+           "#2D3142",
+           "#F4743B")
+```
+
+```{r}
+## ANTES DE USAR
+# Para criar data/movies.csv
+import_data("scarlett_johansson") # ou com o ator/atriz que você escolher
+```
+
+
+```{r read}
+filmes = read_imported_data("scarlett_johansson")
+```
+
+## Descrição
+
+```{r}
+filmes %>% 
+    ggplot(aes(x = ano, y = bilheteria)) + 
+    geom_point(size = 4, color = paleta[1]) + 
+    scale_y_log10()
+```
+
+
+
+```{r}
+filmes %>% 
+    ggplot(aes(x = bilheteria)) + 
+    geom_histogram(binwidth = 15, fill = paleta[2], color = "black") + 
+    geom_rug(size = .5) 
+```
+
+```{r}
+filmes %>% 
+    ggplot(aes(x = avaliacao)) + 
+    geom_histogram(binwidth = 10, boundary = 0, fill = paleta[3], color = "black") + 
+    geom_rug(size = .5) 
+```
+
+## Explorar interativamente
+
+```{r}
+p = filmes %>% 
+    ggplot(aes(x = ano, y = bilheteria, label = filme)) + 
+    geom_point(size = 4, color = paleta[1]) + 
+    scale_y_log10()
+
+ggplotly(p)
+```
+
+## Agrupamento 

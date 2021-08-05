@@ -49,11 +49,13 @@ import_data <- function(celebridade = "tom_cruise"){
     
     filmes = from_page %>% 
         clean_names() %>% 
+        rename(rating = tomatometer_r) %>% 
         filter(rating != "No Score Yet", 
                box_office != "—", 
                !(credit %in% c("Producer", "Executive Producer"))) %>%
         mutate(rating = as.numeric(gsub("%", "", rating)),
                credit = gsub("\n *", " ", credit),
+               audience_score = str_remove(audience_score, "%"),
                box_office = as.numeric(gsub("[$|M]", "", box_office))) %>% 
         filter(box_office >= 1)
     
@@ -61,11 +63,12 @@ import_data <- function(celebridade = "tom_cruise"){
         write_csv(here::here(paste0("data/", celebridade, ".csv")))
 }
 
-read_imported_data <- function(){
-    read_csv(here::here("data/movies.csv"), 
-             col_types = "iccdi") %>% 
+read_imported_data <- function(celebridade){
+    read_csv(here::here(paste0("data/", celebridade, ".csv")), 
+             col_types = "idccdi") %>%
         rename(filme = title,
                avaliacao = rating, 
+               nota_audiencia = audience_score,
                bilheteria = box_office,
                ano = year, 
                papel = credit)
