@@ -1,5 +1,5 @@
 ---
-title: "Tipos de filme de FULANO(A)"
+title: "Tipos de filme de Anne Hathaway"
 output:
     html_document:
     df_print: paged
@@ -30,15 +30,21 @@ paleta = c("#404E4D",
 ```{r}
 ## ANTES DE USAR
 # Para criar data/movies.csv
-import_data("scarlett_johansson") # ou com o ator/atriz que você escolher
+import_data("anne_hathaway") # ou com o ator/atriz que você escolher
 ```
 
 
 ```{r read}
-filmes = read_imported_data("scarlett_johansson")
+filmes = read_imported_data("anne_hathaway")
 ```
 
-## Descrição
+# Descrição
+
+A partir das avaliações sobre os filmes de Anne Hathaway, vamos analisar os tipos de filmes nos quais ela atuou
+
+## Sucesso de público (bilheteria)
+
+A seguir, vamos analisar como foram os indicadores de bilheteria dos filmes em que Anne Hathaway participou:
 
 ```{r}
 filmes %>% 
@@ -56,14 +62,9 @@ filmes %>%
     geom_rug(size = .5) 
 ```
 
-```{r}
-filmes %>% 
-    ggplot(aes(x = avaliacao)) + 
-    geom_histogram(binwidth = 10, boundary = 0, fill = paleta[3], color = "black") + 
-    geom_rug(size = .5) 
-```
 
-## Explorar interativamente
+
+### Explorar interativamente
 
 ```{r}
 p = filmes %>% 
@@ -72,6 +73,14 @@ p = filmes %>%
     scale_y_log10()
 
 ggplotly(p)
+```
+
+## Avaliação rotten tomatoes
+```{r}
+filmes %>% 
+    ggplot(aes(x = avaliacao)) + 
+    geom_histogram(binwidth = 10, boundary = 0, fill = paleta[3], color = "black") + 
+    geom_rug(size = .5) 
 ```
 
 ## Agrupamento 
