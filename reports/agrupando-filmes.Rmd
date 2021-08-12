@@ -1,25 +1,32 @@
 ---
-title: "Tipos de filme de FULANO(A)"
+title: "Tipos de filme de Anne Hathaway"
+author: "Helena Mylena C. Dantas"
 output:
     html_document:
-    df_print: paged
+        df_print: paged
+        toc: yes
+        toc_float: yes
+    html_notebook:
+        toc: yes
+        toc_float: yes
 theme: sandstone
 ---
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(here)
 library(cluster)
 library(plotly)
-
+library(ggdendro)
+library(broom)
+library(ggpubr)
 source(here::here("code/lib.R"))
 theme_set(theme_report())
-
 knitr::opts_chunk$set(tidy = FALSE,
                       fig.width = 6,
                       fig.height = 5,
                       echo = TRUE)
-
 paleta = c("#404E4D",
            "#92DCE5",
            "#938BA1",
@@ -30,31 +37,55 @@ paleta = c("#404E4D",
 ```{r}
 ## ANTES DE USAR
 # Para criar data/movies.csv
-import_data("scarlett_johansson") # ou com o ator/atriz que você escolher
+import_data("anne_hathaway") # ou com o ator/atriz que você escolher
 ```
 
 
 ```{r read}
-filmes = read_imported_data("scarlett_johansson")
+filmes = read_imported_data("anne_hathaway")
 ```
 
-## Descrição
+# Descrição
+
+
+Nessa análise, iremos explorar dados acerca das atuações de Anne Jacqueline Hathaway, uma das atrizes norte-americanas mais bem paga do mundo. 
+
+A partir das avaliações sobre os filmes de Anne Hathaway, vamos analisar os tipos de filmes nos quais ela atuou.
+
+# Avaliação rotten tomatoes
+
+Inicialmente iremos analisar a avaliação da crítica através de dados extraídos do [RottenTomatoes](https://www.rottentomatoes.com/)
+
+## Avaliação no decorrer do tempo
+
+O gráfico abaixo mostra que a maioria dos filmes Anne Hathaway teve menos 60% de boas avaliações, o que significa que são classificados como mancha do tomate verde (exibida para indicar um filme não tão bem avaliado).
 
 ```{r}
-filmes %>% 
-    ggplot(aes(x = ano, y = bilheteria)) + 
-    geom_point(size = 4, color = paleta[1]) + 
+p = filmes %>% 
+    ggplot(aes(x = ano, y = avaliacao, label = filme)) + 
+    geom_point(size = 4, color = paleta[2]) + 
+        labs(x = "Ano", y = "Avaliação") +
     scale_y_log10()
+
+ggplotly(p)
 ```
 
+## Possíveis grupos por avaliação
 
-
+Ao analisar o próximo gráfico, podemos confirmar a impressão anterior.
 ```{r}
-filmes %>% 
-    ggplot(aes(x = bilheteria)) + 
-    geom_histogram(binwidth = 15, fill = paleta[2], color = "black") + 
-    geom_rug(size = .5) 
+p = filmes %>% 
+    ggplot(aes(x = "", y = avaliacao, text = paste("Filme:",filme,
+                            "\nAvaliação:",
+                            avaliacao,"m"))) + 
+    geom_jitter(width = .05, alpha = .4, size = 3, color = paleta[5]) + 
+    labs(x = "", y="Avaliação")
+ggplotly(p, tooltip="text")
+
 ```
+## Quantidade de filmes por intervalo de avaliação
+
+No histograma podemos ver que pelo menos 5 filmes tiveram certificado Fresh do Rotten Tomatoes, o que significa que 75% dos comentários são positivos e teve no mínimo 5 avaliações dos principais críticos do Rotten Tomatoes.
 
 ```{r}
 filmes %>% 
@@ -63,15 +94,87 @@ filmes %>%
     geom_rug(size = .5) 
 ```
 
-## Explorar interativamente
+# Sucesso de público (bilheteria)
 
-```{r}
+A seguir, vamos analisar como foram os indicadores de bilheteria dos filmes em que Anne Hathaway participou:
+
+## A bilheteria no decorrer dos anos
+
+No gráfico abaixo podemos ver que a maioria dos filmes teve bilheteria abaixo de 100 milhões.
+
+```{r, warning=FALSE}
 p = filmes %>% 
     ggplot(aes(x = ano, y = bilheteria, label = filme)) + 
-    geom_point(size = 4, color = paleta[1]) + 
+    geom_point(size = 4, color = paleta[2]) + 
+    labs(x = "Ano", y="Bilheteria") +
     scale_y_log10()
 
 ggplotly(p)
 ```
 
-## Agrupamento 
+## Possíveis grupos por bilheteria
+
+Já no próximo gráfico abaixo, podemos ver que apenas um filme teve bilheteria acima de 300 milhões.
+
+```{r}
+p = filmes %>% 
+    ggplot(aes(x = "", y = bilheteria, text = paste("Filme:",filme,
+                            "\nBilheteria:",
+                            bilheteria,"m"))) + 
+    geom_jitter(width = .05, alpha = .4, size = 3, color = paleta[5]) + 
+    labs(x = "", y="Bilheteria")
+ggplotly(p, tooltip="text")
+```
+
+
+## Quantidade de filmes por intervalo de arrecadação
+
+No histograma abaixo, é possível concluir também que apenas 2 filmes tiveram arrecadação acima da mediana (150 milhões) e que cerca de 24 filmes tiveram arrecadação igual ou abaixo de 150 milhões.
+
+```{r}
+filmes %>% 
+    ggplot(aes(x = bilheteria)) + 
+    geom_histogram(binwidth = 15, fill = paleta[2], color = "black") + 
+    geom_rug(size = .5) 
+```
+
+# Agrupamento 
+
+Para entender melhor como se classificam os filmes interpretados por Anne Hathaway, vamos dividi-los em grupos através das variáveis avaliação e bilheteria.
+
+## Normalização das variáveis
+
+Agora vamos normalizar as estatísticas descritivas abaixo:
+
+```{r}
+normal = filmes %>% 
+    mutate(bilheteria_normalizada = as.vector(scale(log10(bilheteria))), 
+           avaliacao_normalizada = as.vector(scale(avaliacao)))
+summary(normal %>% select(bilheteria_normalizada, avaliacao_normalizada))
+```
+## Agrupamento K-means
+
+Com a execução do Gap Statics é possível perceber que o melhor valor para o K é 5. Logo, assumindo assim esse valor, executamos o algoritmo do k-means.
+
+```{r}
+set.seed(12345)
+n_clusters = 4
+cluster = normal %>% 
+    select(bilheteria_normalizada, avaliacao_normalizada) %>% 
+    kmeans(centers = n_clusters, nstart = 20)
+agrupado = cluster %>% 
+    augment(normal)
+p1 = agrupado %>% 
+    ggplot(aes(x = avaliacao, y = bilheteria, color = .cluster, label=filme))  + 
+    geom_point(size = 3)+
+    scale_y_log10()
+
+ggplotly(p1)
+```
+
+Assim, podemos concluir que existem 4 categorias de grupos de filmes em Anne Hathaway interpretou:
+
+* Baixa avaliação e baixa bilheteria: o grupo contém o filme com bilheteria mais baixa, "The Other Side of Heaven". Além disso, contém mais 6 filmes ("Serenity", "One day", Becoming Jane", "Ella Enchanted", "Love & Other Drugs" e "Hoodwinked". 
+* Baixa avaliação e alta bilheteria: nessa categoria temos o filme "Bride Wars", que teve a menor avaliação. Nesse grupo há também os filmes "The Hustle", "Valentine's Day", "The Princess Diaries 2: Royal Engagement" e "Alice Through the Looking Glass".
+* Alta avaliação e baixa bilheteria: esse grupo contém o filme mais bem avaliado da carreira de Anne Hathaway, "Dark Waters". Contém ainda os filmes "Rachel Getting Married", "The Dark Knight Rises", "Colossal" e "Nicholas Nickleby"
+* Alta avaliação e alta bilheteria: nesse grupo temos o filme com maior bilheteria estrelado por Anne, "Alice in Wonderland". Há ainda "The Princess Diaries", "Get Smart", "The Intern", "Les Misérables", "Ocean's 8", "Interstellar", "The Devil Wears Prada" e "Brokeback Mountain"
