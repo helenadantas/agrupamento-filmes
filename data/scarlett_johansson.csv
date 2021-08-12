@@ -1,19 +1,19 @@
 rating,audience_score,title,credit,box_office,year
-80,91,Black Widow,"Natasha Romanoff/Black Widow (Character),Executive Producer",174.4,2021
+80,91,Black Widow,"Natasha Romanoff/Black Widow (Character),Executive Producer",174.3,2021
 80,94,Jojo Rabbit,Rosie (Character),33.4,2019
 94,90,Avengers: Endgame,Natasha Romanoff/Black Widow (Character),858.4,2019
 90,87,Isle of Dogs,Nutmeg (Voice),31.9,2018
 85,91,Avengers: Infinity War,Natasha Romanoff/Black Widow (Character),678.8,2018
 43,51,Ghost in the Shell,Major (Character),40.5,2017
 45,29,Rough Night,Jess (Character),22.1,2017
+85,44,"Hail, Caesar!",DeeAnna Moran (Character),30,2016
 94,86,The Jungle Book,Kaa (Voice),364,2016
 90,89,Captain America: Civil War,Natasha Romanoff/Black Widow (Character),408.1,2016
-85,44,"Hail, Caesar!",DeeAnna Moran (Character),30,2016
 72,72,Sing,Ash (Voice),270.4,2016
 76,83,Avengers: Age of Ultron,Natasha Romanoff/The Black Widow (Character),459,2015
 90,92,Captain America: The Winter Soldier,Natasha Romanoff/Black Widow (Character),259.7,2014
-67,47,Lucy,Lucy (Character),126.5,2014
 87,85,Chef,Molly (Character),31.2,2014
+67,47,Lucy,Lucy (Character),126.5,2014
 80,58,Don Jon,Barbara (Character),24.5,2013
 94,82,Her,Samantha (Voice),25.6,2013
 84,55,Under the Skin,The Female (Character),2.6,2013
@@ -28,8 +28,8 @@ rating,audience_score,title,credit,box_office,year
 41,55,Scoop,Sondra Pransky (Character),10.5,2006
 32,27,The Black Dahlia,Kay Lake (Character),22.5,2006
 77,81,Match Point,Nola Rice (Character),23.1,2005
-16,44,The Perfect Score,Francesca (Character),10.4,2004
 83,54,In Good Company,Alex Foreman (Character),45.5,2004
+16,44,The Perfect Score,Francesca (Character),10.4,2004
 68,78,The SpongeBob SquarePants Movie,Mindy (Voice),85.4,2004
 73,68,Girl With a Pearl Earring,Griet (Character),11.6,2003
 95,85,Lost in Translation,Charlotte (Character),44.6,2003

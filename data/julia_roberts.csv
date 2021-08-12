@@ -1,18 +1,45 @@
-rating,title,credit,box_office,year
-85,Wonder,Isabel Pullman,132.1,2017
-8,Mother's Day,Miranda,29.2,2016
-66,August: Osage County,Barbara Weston,29.3,2013
-50,Mirror Mirror,The Evil Queen,65,2012
-36,Larry Crowne,Mercedes Tainot,35.6,2011
-36,Eat Pray Love,Liz Gilbert,80.6,2010
-18,Valentine's Day,Captain Kate Hazeltine,110.6,2010
-65,Duplicity,Claire Stenwick,40.6,2009
-82,Charlie Wilson's War,Joanne Herring,66.7,2007
-78,Charlotte's Web,Charlotte,82.2,2006
-62,The Ant Bully,Hova,28.2,2006
-55,Ocean's Twelve,Tess Ocean,125.5,2004
-68,Closer,Anna,34,2004
-34,Mona Lisa Smile,Katherine Watson,63.7,2003
-82,Ocean's Eleven,Tess,183.4,2001
-32,America's Sweethearts,Kiki Harrison,93.1,2001
-54,The Mexican,Samantha,66.6,2001
+rating,audience_score,title,credit,box_office,year
+81,69,Ben Is Back,Holly Burns (Character),3.7,2018
+86,88,Wonder,Isabel (Character),132.4,2017
+40,54,Smurfs: The Lost Village,SmurfWillow (Voice),45,2017
+59,51,Money Monster,Patty Fenn (Character),41,2016
+8,44,Mother's Day,Miranda (Character),32.5,2016
+39,41,Secret in Their Eyes,Jess (Character),20.2,2015
+67,65,August: Osage County,Barbara Weston (Character),37.7,2013
+50,44,Mirror Mirror,The Queen (Character),64.9,2012
+37,41,Larry Crowne,Mercedes Tainot (Character),35.6,2011
+36,42,Eat Pray Love,Liz Gilbert (Character),80.6,2010
+18,47,Valentine's Day,Capt. Kate Hazeltine (Character),110.5,2010
+65,37,Duplicity,Claire Stenwick (Character),40.6,2009
+82,73,Charlie Wilson's War,Joanne Herring (Character),66.6,2007
+78,62,Charlotte's Web,Charlotte (Voice),82.5,2006
+62,42,The Ant Bully,Hova (Voice),28.1,2006
+68,81,Closer,Anna (Character),34,2004
+54,60,Ocean's Twelve,Tess Ocean (Character),125.5,2004
+34,60,Mona Lisa Smile,Katherine Watson (Character),63.7,2003
+79,75,Confessions of a Dangerous Mind,Patricia (Character),16,2002
+39,27,Full Frontal,Francesca/Catherine (Character),2.5,2002
+83,80,Ocean's Eleven,Tess Ocean (Character),183.4,2001
+54,44,The Mexican,Samantha Barzel (Character),66.8,2001
+32,40,America's Sweethearts,Kiki Harrison (Character),93.6,2001
+85,81,Erin Brockovich,Erin Brockovich (Character),125.5,2000
+46,53,Runaway Bride,Maggie Carpenter (Character),152.1,1999
+83,79,Notting Hill,Anna Scott (Character),116.1,1999
+46,75,Stepmom,"Isabel Kelly (Character),Executive Producer",91,1998
+57,64,Conspiracy Theory,Alice Sutton (Character),76.1,1997
+73,73,My Best Friend's Wedding,Julianne Potter (Character),126.8,1997
+26,40,Mary Reilly,Mary Reilly (Character),5.5,1996
+79,68,Everyone Says I Love You,Von Sidell (Character),9.7,1996
+77,84,Michael Collins,Kitty Kiernan (Character),11.1,1996
+39,52,Something to Talk About,Grace King Bichon (Character),49.7,1995
+22,33,I Love Trouble,Sabrina Peterson (Character),30.8,1994
+24,27,Ready to Wear (Pret-a-Porter),Anne Eisenhower (Character),10.7,1994
+53,61,The Pelican Brief,Darby Shaw (Character),100.7,1993
+23,65,Dying Young,Hilary O'Neil (Character),32.3,1991
+29,76,Hook,Tinkerbell (Character),116.3,1991
+20,60,Sleeping With the Enemy,Sara Waters/Laura Burney (Character),100.3,1991
+49,59,Flatliners,Rachel Mannus (Character),58.7,1990
+64,68,Pretty Woman,Vivian 'Viv' Ward (Character),178.4,1990
+68,89,Steel Magnolias,Shelby Eatenton Latcherie (Character),79.4,1989
+40,52,Satisfaction,Daryle (Character),7.9,1988
+75,54,Mystic Pizza,Daisy Arujo (Character),12.8,1988
